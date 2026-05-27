@@ -1,0 +1,226 @@
+
+/* 1. 공통 스타일 */
+.contact-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-color);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    display: block; /* 다크 모드에서는 무조건 표시 */
+}
+
+.contact-content-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* [초기 레이어] 4초 동안 보여주는 자리 */
+.initial-layer {
+    position: absolute;
+    top: 50%; /* 다크 모드에서는 중앙 고정 */
+    left: 50%;
+    transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    z-index: 3; /* final-layer보다 위에 배치 */
+}
+
+/* [최종 레이어] 전화번호가 나올 자리 (기본적으로 숨김) */
+.final-layer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    opacity: 0; /* 기본적으로 숨김 */
+    visibility: hidden; /* 영역까지 숨김 */
+    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+    z-index: 2; /* initial-layer보다 아래 배치 */
+}
+
+/* JS 애니메이션 클래스 복구 */
+.initial-layer.fade-out {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.final-layer.fade-in {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* [다크 모드] 텍스트 스타일 */
+.initial-title {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 800;
+    color: var(--text-color);
+    letter-spacing: 12px;
+    margin: 0;
+    text-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+}
+
+.main-title{
+    font-size: clamp(32px, 3vw, 54px);
+   margin-bottom: 50px !important;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    color: #fff;
+    font-size: clamp(16px, 3.2vw, 32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.thanks-msg {
+    font-size: clamp(14px, 2.8vw, 20px);
+    color: #7a7a7a;
+    font-style: italic;
+    margin-top: 30px !important;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+}
+
+/* --- [2. 라이트 모드 전용] 완전히 격리된 스타일 --- */
+[data-theme='Light'] .contact-section {
+    background: url('/image/5page_5.png') no-repeat center/cover;
+}
+
+[data-theme='Light'] .bg-video {
+    display: none;
+}
+
+[data-theme='Light'] .contact-content-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: relative !important;
+    height: 100vh !important;
+    width: 100% !important;
+}
+
+/* 라이트 모드 레이아웃 오버라이드 (JS 애니메이션 덮어씀) */
+[data-theme='Light'] .initial-layer,
+[data-theme='Light'] .final-layer {
+    position: absolute !important;
+    opacity: 1 !important; 
+    visibility: visible !important;
+    transition: none !important; 
+    display: block !important;
+    top: auto !important; 
+    left: auto !important;
+    transform: none !important;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* [라이트 모드] 텍스트 위치 및 스타일 (이전과 동일) */
+[data-theme='Light'] .initial-title {
+    position: absolute !important;
+    top: 20% !important; /* 상단에서 150px 아래 고정 */
+    left:10px !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-weight: 800 !important;
+    background: linear-gradient(to right, #000 50%, #fff 50%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    white-space: nowrap !important;
+    font-size: clamp(48px, 4.5vw, 64px)
+}
+
+[data-theme='Light'] .main-title {
+   position: absolute;
+   top: 40%;
+   left: 50%;
+   transform: translateX(-50%);
+   background: linear-gradient(to right, #000 50%, #fff 50%) !important;
+   -webkit-background-clip: text !important;
+   background-clip: text !important;
+   color: transparent !important;
+   white-space: nowrap !important;
+   font-size: clamp(26px, 2.4vw, 48px);
+}
+
+[data-theme='Light'] .info-list {
+    position: absolute !important;
+    top: 70% !important;
+    left: 25% !important; /* 배경 원의 중앙쯤 */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* 글자 가로 중앙 정렬 */
+    justify-content: center !important;
+    width: 45% !important; /* 배경 원 크기에 맞게 조절 */
+    transform: translate(-50%, -50%) !important;
+    color: #000 !important;
+    gap: 10px;
+}
+
+[data-theme='Light'] .info-list,
+[data-theme='Light'] .info-list i,
+[data-theme='Light'] .info-list span {
+    color: #000 !important;
+    font-size: clamp(18px, 2vw, 32px) !important;
+}
+
+[data-theme='Light'] .thanks-msg {
+    position: absolute !important;
+    top: 66% !important;
+    right: 25% !important; /* 배경 원의 중앙쯤 */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 45% !important;
+    transform: translate(50%, -50%) !important;
+    text-align: center !important;
+    color: #ffffff !important;
+    font-size: clamp(20px, 2vw, 32px) !important;
+}
+
+/* --- [3. 반응형 통합] --- */
+@media (max-width: 480px) {
+    /* 라이트 모드 모바일 보정 */
+    [data-theme='Light'] .initial-title {
+        position: static !important;
+        margin: 20px auto !important;
+    }
+
+    [data-theme='Light'] .info-list,
+    [data-theme='Light'] .thanks-msg {
+        position: static !important; /* absolute 해제 */
+        transform: none !important;
+        margin: 20px auto !important;
+        width: 90% !important;
+        text-align: center !important;
+    }
+}

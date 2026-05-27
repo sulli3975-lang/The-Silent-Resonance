@@ -1,0 +1,373 @@
+.skills-section {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.skills-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 50px;
+}
+
+.skills-section .section-title {
+    margin-bottom: 80px;
+}
+
+.skills-grid {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    perspective: 2000px;
+}
+
+.skill-card {
+    position: relative;
+    width: 320px;
+    height: 480px;
+    cursor: pointer;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.skill-card:hover {
+    border: 2px solid #E9D5FF;
+    border-radius: 20px;
+    box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.7);
+}
+
+.skill-card.active {
+    width: 500px;
+    z-index: 100;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.skill-card.active .card-inner {
+    transform: rotateY(180deg);
+}
+
+.skill-front,
+.skill-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    isolation: isolate; 
+    transform: translateZ(0);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.skill-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 2;
+}
+
+.front-main-icon {
+    font-size: 100px !important;
+    margin-top: 120px !important;
+    margin-bottom: 30px !important;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover .front-main-icon {
+    transform: translateZ(50px);
+}
+
+.skill-front h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+}
+
+.plus-icon {
+    position: absolute;
+    bottom: 30px;
+    font-size: 70px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    display: inline-block;
+    transition: all 0.4s ease;
+}
+
+.plus-icon:hover {
+    transform: rotate(90deg) scale(0.7);
+    color: #fff;
+}
+
+.skill-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 !important;
+}
+
+.skill-back-header {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.skill-back h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    text-align: center;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+}
+
+.skill-back-header i {
+    font-size: 30px;
+}
+
+.divider-line {
+    width: 90%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.skill-list {
+    height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skill-list li {
+    position: relative;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 24px;
+    line-height: 2.2em;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.skill-list li:hover {
+    color: #E9D5FF;
+}
+
+.skill-list li::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #E9D5FF;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.skill-list li:hover::after {
+    transform: scaleX(1);
+}
+
+.skill-tool {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: #E9D5FF;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 1024px) {
+    .skills-container {
+        padding: 0 20px;
+    }
+    
+    .skills-grid {
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-section {
+        min-height: auto;
+        padding: 60px 0;
+    }
+    
+    .skills-container {
+        padding: 0 20px;
+    }
+    
+    .skills-section .section-title {
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
+    
+    .skills-grid {
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .skill-card {
+        width: 100%;
+        max-width: 280px;
+        height: 400px;
+    }
+    
+    .skill-card.active {
+        width: 100%;
+    }
+    
+    .front-main-icon {
+        font-size: 70px !important;
+        margin-top: 60px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .skill-front h3 {
+        font-size: 18px;
+    }
+    
+    .skill-list li {
+        font-size: 16px;
+    }
+    
+    .skill-tool {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .skills-section .section-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    
+    .skill-card {
+        width: 100%;
+        height: 350px;
+    }
+    
+    .front-main-icon {
+        font-size: 50px !important;
+        margin-top: 40px !important;
+    }
+    
+    .skill-front h3 {
+        font-size: 16px;
+    }
+    
+    .plus-icon {
+        font-size: 50px;
+        bottom: 20px;
+    }
+    
+    .skill-list li {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    
+    .skill-tool {
+        font-size: 12px;
+    }
+}
+
+
+/* 1. 배경 설정 및 영상 숨김 */
+[data-theme='Light'] .skills-section {
+    background: url('/image/3page_3.png') no-repeat center/cover;
+}
+
+[data-theme='Light'] .video-container {
+    display: none !important;
+}
+
+/* 2. 카드 배경 및 기본 텍스트/아이콘 색상 */
+[data-theme='Light'] .section-title {
+   color: #fff !important;
+}
+
+[data-theme='Light'] .skill-front,
+[data-theme='Light'] .skill-back {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: linear-gradient(to bottom, #fff 30%, #000 80%) !important;
+    border:1px solid #ddd !important;
+}
+
+[data-theme='Light'] .skill-front h3,
+[data-theme='Light'] .skill-back h3,
+[data-theme='Light'] .skill-list li,
+[data-theme='Light'] .front-main-icon,
+[data-theme='Light'] .back-main-icon {
+    color: #000 !important;
+}
+
+[data-theme='Light'] .plus-icon{
+     color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* 3. 카드 호버 시 색상 변화 (포인트 컬러 적용) */
+/* 카드 전체 호버 시 아이콘, 제목, +기호 변경 */
+[data-theme='Light'] .skill-card:hover .front-main-icon,
+[data-theme='Light'] .skill-card:hover .back-main-icon,
+[data-theme='Light'] .skill-card:hover .skill-front h3,
+[data-theme='Light'] .skill-card:hover .skill-back h3,
+[data-theme='Light'] .skill-card:hover .plus-icon {
+    color: var(--point-color) !important;
+}
+
+/* 카드 테두리 및 그림자 강조 */
+[data-theme='Light'] .skill-card:hover {
+    border: 2px solid var(--point-color) !important;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 4. 스킬 리스트 및 툴 색상 변경 */
+[data-theme='Light'] .skill-tool,
+[data-theme='Light'] .skill-list li:hover {
+    color: var(--point-color) !important;
+}
+
+/* 5. 밑줄 색상 및 호버 애니메이션 */
+[data-theme='Light'] .skill-list li::after {
+    background: var(--point-color) !important;
+}
+
+[data-theme='Light'] .skill-list li:hover::after {
+    transform: scaleX(1) !important;
+}

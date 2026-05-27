@@ -1,0 +1,157 @@
+/* ===================================================
+   [상단 2번] MOTION EXPERIENCE 비디오 모달 최종 레이아웃
+   =================================================== */
+
+/* 1. 모달 전체 판틀 조정 (상하 간격 축소) */
+.type-video .video-layout {
+    position: relative;
+    width: 85%;
+    max-width: 1100px;
+    height: 85vh;
+    padding: 20px 30px 25px !important; /* 상단 패딩을 줄여 타이틀을 위로 바짝 붙임 */
+    background: rgba(17, 17, 17, 0.9); /* 완벽한 다크 시네마 무드 */
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. 상단 텍스트 간격 압축 */
+.type-video .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-top: 5px !important;
+    margin-bottom: 15px !important; /* 💡 타이틀 밑 여백을 극도로 줄여 스크린을 위로 견인 */
+}
+
+/* 🎬 3. 메인 비디오 스크린 (위로 바짝 올리고 하단 여백 폭발) */
+.main-video-container {
+    flex: 1;
+    width: 100%;
+    max-height: 70vh; /* 플레이어 화면을 살짝 압축해 위로 고정 */
+    margin-bottom: 45px !important; /* 💡 하단 슬라이더 트랙과의 거리를 시원하게 벌림 */
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.main-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 🎞️ 4. 하단 썸네일 슬라이더 박스 (🔥 가로 무한 스크롤의 핵심) */
+.video-thumb-slider {
+    width: 100%;
+    height: 135px;
+    
+    /* 💡 가로 한 줄 정렬을 유지하고 스크롤이 터지게 만드는 마법의 속성 조합 */
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; 
+    overflow-x: auto !important; 
+    overflow-y: hidden !important;
+    
+    gap: 15px;
+    padding-top: 15px; /* 💡 스크롤바가 상단에 배치될 공간 확보 */
+    padding-bottom: 5px;
+}
+
+/* 5. 개별 썸네일 카드 (구겨짐 절대 방지) */
+.video-item {
+    /* 💡 중요: flex-shirk를 0으로 주어 화면이 좁아져도 5번, 6번 카드가 구겨지지 않고 우측 밖으로 밀려나게 만듭니다. */
+    flex: 0 0 180px !important; 
+    height: 100px;
+    cursor: pointer;
+    background: rgba(45, 45, 45, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 6px; /* 이중 프레임 베젤 */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                border-color 0.3s ease, 
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.video-thumb-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-thumb-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7);
+}
+
+/* 재생 버튼 오버레이 */
+.play-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+
+/* 👑 현재 활성화된 동영상 하이라이트 스타일 */
+.video-item.active {
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px);
+}
+.video-item.active img { filter: brightness(1); }
+.video-item.active .play-icon { opacity: 1; }
+
+.video-item:hover:not(.active) {
+    transform: translateY(-5px); /* 외부 그림자가 아니므로 scale(1.02)는 뺍니다 */
+    border-color: rgba(255, 255, 255, 0.4); /* 테두리를 조금 더 선명하게 */
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5); /* 👈 inset 추가! */
+    background: rgba(255, 255, 255, 0.1)
+}
+
+.glass-video-card:hover{
+    transform: scale(1.05);
+   transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 🎚️ 6. 슬라이더 바를 썸네일 '상단'으로 완벽하게 이동시키기 */
+/* 파이어폭스, 크롬 등 브라우저 호환성을 위해 아래 세팅을 적용합니다 */
+.video-thumb-slider {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* 웹킷 브라우저 (Chrome, Safari) 스크롤바 상단 고정 */
+.video-thumb-slider::-webkit-scrollbar {
+    height: 4px; /* 슬림한 트랙 두께 */
+}
+.video-thumb-slider::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+.video-thumb-slider::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+.video-thumb-slider::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+

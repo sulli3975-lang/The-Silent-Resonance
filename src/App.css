@@ -1,0 +1,52 @@
+
+
+* {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* 2. 최상위 root 컨테이너의 족쇄를 해제 */
+#root, .App {
+    width: 100vw !important;
+    min-height: 100vh;
+    display: block !important; /* 쏠림을 방지하기 위해 flex 대신 block 권장 */
+    overflow-x: hidden !important; /* 가로 스크롤(흰 선의 원인) 원천 차단 */
+    background-color: #000;
+}
+
+/* 3. 모든 섹션을 화면 너비에 1:1로 강제 밀착 */
+section {
+    position: relative;
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.portfolio-container {
+    position: relative; /* 이게 있어야 내부 absolute/fixed가 꼬이지 않습니다 */
+    width: 100vw;
+    min-height: 100vh;
+}
+
+/* 영혼 컨테이너 - fixed로 변경하여 화면에 딱 붙임 */
+.soul-background-container {
+    position: fixed !important; /* 화면 기준 고정 */
+    bottom: 30px !important;
+    right: 30px !important;
+    z-index: 9999 !important;
+    cursor: pointer;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.soul-background-container:hover {
+    transform: scale(1.1);
+}
+

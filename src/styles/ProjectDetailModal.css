@@ -1,0 +1,535 @@
+/* ========================================================
+   🔒 [PART 1] 최외곽 기본 모달 팝업 & 전역 스타일 세팅
+   ======================================================== */
+.common-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000 !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.common-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 메인 글래스모피즘 알맹이 카드 판틀 */
+.glass-Detail-card {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 80vh; /* 고정 높이 비율 적용하여 내부 스크롤 강제 활성화 */
+  background: rgba(18, 18, 18, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 24px;
+  padding: 50px 40px !important;
+  box-sizing: border-box;
+  overflow: hidden; /* 알맹이 자체는 숨기고 내부 존에서 스크롤 */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.common-modal.active .glass-Detail-card {
+  transform: scale(1);
+}
+
+/* 우측 상단 닫기 X 버튼 (PC 기준 기본값) */
+.close-modal {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  font-size: 36px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  z-index: 100;
+}
+
+.close-modal:hover { 
+  color: #fff; 
+  transform: rotate(90deg);
+}
+
+/* 커스텀 스크롤바 메인 디자인 */
+.detail-info-zone::-webkit-scrollbar,
+.scroll-mockup-box::-webkit-scrollbar {
+  width: 5px;
+}
+
+.detail-info-zone::-webkit-scrollbar-thumb,
+.scroll-mockup-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+
+/* ========================================================
+   🌐 [PART 2] PC 데스크톱 기준 레이아웃 & 타이포그래피
+   ======================================================== */
+.project-detail-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+}
+
+/* 🎥 왼쪽: 미디어/비주얼 구역 */
+.detail-visual-zone {
+  flex: 0 0 50%;
+  height: 100%;
+  background: #050505;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 📜 오른쪽: 타이포그래피 정보 구역 (Flexbox 정렬 구조로 대개조) */
+.detail-info-zone {
+  flex: 0 0 46%;
+  height: 100%;
+  padding-right: 10px;
+  box-sizing: border-box;
+  overflow-y: auto !important;
+  position: relative;
+  
+  /* 💡 내용물과 하단 고정 버튼 분리를 위한 핵심 밸런싱 */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important; 
+}
+
+/* 📄 [신규 필독] 본문 텍스트 전체를 묶는 그룹 (버튼을 하단으로 밀어내는 서포터) */
+.detail-text-content-wrapper {
+  flex: 1 !important;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px; /* 버튼과의 최소한의 안전 격리선 확보 */
+}
+
+/* 카테고리 태그 */
+.detail-category {
+  font-size: 28px; /* 기존 과하게 크던 48px 폭주 제어 및 고정 */
+  font-weight: 700;
+  letter-spacing: 3px;
+  display: inline-block;
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+}
+
+/* 메인 타이틀 */
+.detail-title {
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 25px 0;
+  letter-spacing: -0.5px;
+}
+
+/* 중간 인트로 문구 하이라이트 박스 */
+.detail-summary-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid currentColor;
+  padding: 18px 20px !important;
+  margin-top: 10px !important;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #dddddd;
+  margin-bottom: 20px !important;
+}
+
+/* 하부 기획 설명 텍스트 */
+.detail-description h3 {
+  font-size: 20px; /* 26px에서 본문 조화를 위해 리사이징 */
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 30px 0 12px 0;
+  margin-bottom: 10px !important;
+  text-transform: uppercase;
+}
+
+.detail-description p {
+  font-size: 16px; /* 18px에서 타이포 스케일 조절 */
+  line-height: 1.7;
+  color: #aaaaaa;
+  margin-bottom: 10px !important;
+}
+
+/* 🔗 [기존 중복 정리] 하단 중앙 배치 버튼 공통 마스터 베이스 */
+.project-detail-layout .detail-btn,
+.detail-btn {
+  position: relative !important; /* absolute 제거 후 flex 분할 배치로 안전 안착 */
+  margin: 0 auto !important;     /* 하단 가로 정렬 마법의 키 */
+  
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  
+  width: 100% !important;
+  max-width: 450px !important;
+  height: 50px !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 2px !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+}
+
+.link-btn {
+  background: #ffffff !important; 
+  color: #111111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.link-btn:hover {
+  background: #e76048 !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 25px rgba(231, 96, 72, 0.4) !important;
+  border-color: #e76048 !important;
+}
+
+.btn-icon {
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+}
+
+
+/* ========================================================
+   🎯 [PART 3] 프로젝트별 고유 ID 특화 테마 (1, 2, 3, 4 순차 정리)
+   ======================================================== */
+
+/* --- 📱 PROJECT 1 (PET CONNECT) 전용 스타일 --- */
+.mockup-phone-frame {
+  height: 100%;
+  width: 100%;
+  aspect-ratio: 9 / 19;
+  background: #000;
+  border: 12px solid #222;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+}
+
+.mockup-media {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+}
+
+/* --- 💐 PROJECT 2 & 3 공통 가로/세로 이미지 스크롤 베이스 --- */
+.scroll-mockup-box {
+  overflow-y: auto !important;
+  display: block !important; 
+}
+
+.scroll-inner-media {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* --- 🌸 PROJECT 3 (SOAP FLOWER) SVG 전용 인터랙션 --- */
+.soap-flower-btn .btn-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.soap-flower-btn .btn-icon svg {
+  width: 100%;
+  height: 100%;
+  color: #e76048;
+  transition: all 0.4s ease;
+  filter: drop-shadow(0 0 2px rgba(231, 96, 72, 0.2));
+}
+
+.soap-flower-btn:hover .btn-icon svg {
+  color: #ffffff;
+  transform: rotate(15deg) scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+}
+
+/* --- 🎬 PROJECT 4 (THE DOOR) 사이드바 확장 축소 비디오 레이아웃 --- */
+.type-campaign .detail-visual-zone {
+  flex: 0 0 50%;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: flex 0.5s cubic-bezier(0.25, 1, 0.25, 1);
+}
+
+.type-campaign .detail-info-zone {
+  transition: flex 0.5s cubic-bezier(0.25, 1, 0.25, 1), opacity 0.3s, visibility 0.3s;
+}
+
+.type-campaign.sidebar-collapsed .detail-visual-zone {
+  flex: 0 0 calc(100% - 45px) !important;
+}
+
+.type-campaign.sidebar-collapsed .detail-info-zone {
+  flex: 0 0 0% !important;
+  padding: 0 !important;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* PC 풀스크린 모드 전용 세로형 토글 버튼 */
+.sidebar-open-toggle-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45px;
+  height: 100%;
+  background: #111;
+  border: none;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  color: #ffdd44;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 0 24px 24px 0;
+}
+
+.type-campaign .campaign-player-frame {
+  width: 100%;
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.type-campaign .campaign-media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.type-campaign .campaign-duration-selector {
+  width: 100%;
+  height: 60px;
+  background: #111;
+  display: flex;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.type-campaign .campaign-duration-selector button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.type-campaign .campaign-duration-selector button.active {
+  color: #ffdd44;
+  background: rgba(255, 221, 68, 0.05);
+}
+
+/* 🎨 카테고리별 포인트 컬러 스위칭 시스템 */
+.type-pet .detail-category, .type-pet .detail-description h3 { color: #44bbff; }
+.type-flower .detail-category, .type-flower .detail-description h3 { color: #ff88aa; }
+.type-makgeolli .detail-category, .type-makgeolli .detail-description h3 { color: #bb88ff; }
+.type-campaign .detail-category, .type-campaign .detail-description h3 { color: #ffdd44; }
+
+
+/* ========================================================
+   📱 [PART 4] 반응형 미디어 쿼리 (파편화된 코드 완벽 대통합)
+   ======================================================== */
+
+/* 💻 타겟 태블릿 및 일반 창모드 브라우저 규격 */
+@media (max-width: 992px) {
+  /* 1. 최외곽 모달 카드 프레임 */
+  .glass-Detail-card {
+    height: 90vh;
+    padding: 40px 25px !important; 
+    overflow-y: auto !important; /* 모달 전체 통합 메인 스크롤 구축 */
+    position: relative !important;
+  }
+  
+  /* 2. 레이아웃 본문 판 틀 세로 정렬화 */
+  .project-detail-layout {
+    flex-direction: column !important; 
+    height: auto !important;
+    gap: 25px !important;
+    overflow: visible !important;
+    padding-right: 15px !important; /* 스크롤바 겹침 방지 여백 정돈 */
+    box-sizing: border-box !important;
+  }
+  
+  /* 3. 이미지/비주얼 구역 프레임 독자 스크롤 복원 */
+  .detail-visual-zone {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: 300px !important; 
+    overflow-y: auto !important; 
+    overflow-x: hidden !important;
+    padding-right: 0px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* 4. 하단 텍스트 정보 구역 초기화 */
+  .detail-info-zone {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow-y: visible !important; /* 겹스크롤 방지를 위해 오픈 */
+    padding-bottom: 20px !important;
+  }
+
+  .detail-text-content-wrapper {
+    padding-bottom: 15px; /* 모바일 전용 텍스트 하단 여백 완화 */
+  }
+
+  /* 5. 모바일/창모드 버튼 흐름 정렬 재배치 */
+  .project-detail-layout .detail-btn,
+  .detail-btn, .soap-flower-btn {
+    position: relative !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    margin-top: 20px !important;
+  }
+
+  /* 6. 🎬 4번 캠페인 프로젝트 모바일 레이아웃 강제 동기화 */
+  .type-campaign .detail-visual-zone {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 15px !important;
+  }
+
+  .type-campaign .campaign-player-frame {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .type-campaign .campaign-duration-selector {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 50px !important;
+    animation: slideUp 0.4s ease-out forwards; 
+  }
+
+  /* PC 전용 세로 open 단추 숨김 */
+  .pc-only-toggle {
+    display: none !important;
+  }
+
+  /* 모바일/창모드 전용 하단 와이드 오픈 버튼 스타일 */
+  .mobile-bottom-open-btn {
+    display: block !important;
+    width: 100% !important;
+    height: 48px !important;
+    background: rgba(231, 96, 72, 0.95) !important; /* 아이덴티티 오렌지 레드 연동 */
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+    margin-top: 10px !important;
+    cursor: pointer !important;
+    animation: slideUp 0.35s ease-out forwards;
+  }
+
+  /* 7. 스크롤바 독립 정밀 비주얼 튜닝 */
+  .glass-Detail-card::-webkit-scrollbar {
+    width: 6px !important;
+  }
+  .glass-Detail-card::-webkit-scrollbar-track {
+    background: transparent !important;
+    margin-top: 60px !important; /* X 버튼과의 충돌 완벽 차단 지점 */
+    margin-bottom: 20px !important;
+  }
+  .glass-Detail-card::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-radius: 10px !important;
+  }
+
+  .detail-visual-zone::-webkit-scrollbar {
+    width: 4px !important;
+  }
+  .detail-visual-zone::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03) !important;
+  }
+  .detail-visual-zone::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* 8. X 닫기 버튼 레이어 격리 배치 */
+  .close-modal { 
+    position: absolute !important;
+    top: 15px !important;        
+    right: 15px !important;       
+    width: 36px !important;      
+    height: 36px !important;
+    font-size: 24px !important; /* 모바일 터치 대응 사이즈 다운 */
+    z-index: 99999 !important;
+    background: rgba(0, 0, 0, 0.7) !important; /* 명시성 보정 */
+    border-radius: 50% !important; 
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* 📱 스마트폰 초소형 스크린 전용 규격 */
+@media (max-width: 576px) {
+  .glass-Detail-card {
+    width: 95%;
+  }
+  .detail-title {
+    font-size: 22px;
+  }
+  .detail-summary-box {
+    font-size: 15px;
+    padding: 14px 16px !important;
+  }
+  .detail-description h3 {
+    font-size: 17px;
+  }
+  .detail-description p {
+    font-size: 14px;
+  }
+}

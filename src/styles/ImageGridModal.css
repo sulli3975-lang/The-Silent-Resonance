@@ -1,0 +1,223 @@
+/* ===================================================
+   [상단 1번] VISUAL STORYTELLING 모달 전용 독립 스타일
+   =================================================== */
+
+/* 1. 모달 본체 박스 (글래스모피즘) */
+.type-image .top-visual-content {
+    position: relative;
+    width: 90%;
+    max-width: 1300px; 
+    height: 85vh;
+    padding: 30px 40px 30px 30px !important; 
+    background: rgba(20, 20, 20, 0.75); /* 시안과 유사한 딥 다크 톤 */
+    border-radius: 25px;
+    overflow: hidden; /* 본체 틀 바깥으로 스크롤이 터지는 것을 차단 */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-top: 10px !important;
+    margin-bottom: 25px !important;
+}
+
+/* 2. 🧱 칼각 4열 포토 그리드 (세로 스크롤 영역) */
+.top-photo-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 무조건 가로 4열 고정 */
+    grid-auto-rows: 240px; /* 카드 세로 높이 일괄 고정 */
+    gap: 20px 20px; /* 가로세로 카드 간격의 균형 유지 */
+    
+    overflow-y: scroll; /* 스크롤바 트랙 위치를 내부에 고정하기 위해 항상 활성화 */
+    
+    /* 💡 기존 15px에서 55px로 대폭 확장하여 우측 슬라이더와 카드 사이의 고급스러운 여백을 확보 */
+    padding-right: 15px !important; 
+}
+
+/* 3. ⭐ 개별 외곽 카드 스타일 (시안 특유의 내부 다크 카드 배경 톤) */
+.top-grid-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(45, 45, 45, 0.6); 
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 15px; /* 💡 카드 내부에 여백을 주어 이미지가 안으로 쏙 들어가게 처리 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s, box-shadow 0.3s;
+}
+
+/* 4. ⭐ 안쪽 이미지 프레임 및 이미지 칼각 설정 */
+.top-grid-item .inner-frame {
+    width: 90%; /* 카드 내부 패딩 안을 꽉 채우도록 설정 */
+    height: 90%;
+    border-radius: 12px;
+    overflow: hidden; /* 이미지가 라운딩 밖으로 깨져나가지 않게 함 */
+}
+
+.top-grid-item .inner-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 중요: 이미지 비율이 깨지거나 멋대로 잡히지 않고 프레임에 꽉 차게 컷팅 */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* 5. 마우스 호버 인터랙션 */
+.top-grid-item:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+}
+
+.top-grid-item:hover img {
+    transform: scale(1.05); /* 마우스 올리면 카드 내부 이미지지만 부드러운 줌인 */
+}
+
+/* 6. 타임라인 감성의 슬림 스크롤바 */
+.top-photo-grid::-webkit-scrollbar { 
+    width: 5px; 
+}
+.top-photo-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+.top-photo-grid::-webkit-scrollbar-thumb { 
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 10px; 
+}
+.top-photo-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* 닫기 버튼 */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    font-size: 32px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10;
+}
+.close-modal:hover {
+    color: #fff;
+}
+
+/* 7. 반응형 레이아웃 */
+@media (max-width: 1024px) {
+    .top-photo-grid {
+        grid-template-columns: repeat(2, 1fr); /* 태블릿에선 2열 */
+        grid-auto-rows: 220px;
+        padding-right: 25px !important; /* 화면 좁아지면 패딩 살짝 완화 */
+    }
+}
+@media (max-width: 640px) {
+    .top-photo-grid {
+        grid-template-columns: 1fr; /* 모바일에선 1열 */
+    }
+}
+
+/* 🔍 8. 이중 모달 (라이트박스) 스타일 */
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95); /* 배경을 완전히 어둡게 하여 대형 이미지에 집중 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20000; /* 첫 번째 모달(10000)보다 명확히 위에 위치 */
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 85%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain; /* 대형 원본 비율 완전 유지 */
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 이미지 번호 표시 (1 / 12) */
+.lightbox-info {
+    margin-top: 15px !important;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+/* 라이트박스 전용 대형 닫기 버튼 */
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 50px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+    z-index: 20002;
+}
+.lightbox-close:hover { opacity: 1; }
+
+/* ◀ ▶ 이동 버튼 */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 20001;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-btn.prev { left: 40px; }
+.nav-btn.next { right: 40px; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .nav-btn { width: 45px; height: 45px; font-size: 18px; }
+    .nav-btn.prev { left: 15px; }
+    .nav-btn.next { right: 15px; }
+    .lightbox-close { top: 15px; right: 20px; font-size: 40px; }
+}
